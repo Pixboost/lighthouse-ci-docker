@@ -7,4 +7,4 @@ before_install:
   - docker build -t lhci .
 
 script:
-  - docker run -it --rm lhci lhci healthcheck
+  - docker run --rm lhci lhci healthcheck --fatal
