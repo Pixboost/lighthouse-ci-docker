@@ -6,9 +6,19 @@
 
 Docker image for [Lighthouse CI CLI](https://github.com/GoogleChrome/lighthouse-ci)
 
+## Advantages comparing to similar images
+
+* Using alpine node image as a base and trying to keep it as small as possible. Currently - 160MB
+* Using tags to pin a specific lhci version
+* Travis CI build with healthcheck
+* Not using `root` user
+
 ## Usage
 
-We are using this image in our Bitbucket Pipeline as a step to run LH tests and upload results.
+We are using this image in our Bitbucket Pipeline as a step to run LH tests and then upload results to 
+Google Cloud Storage.
+
+To pull the image and start playing around:
 
 ```shell script
 docker pull pixboost/lighthouse-ci-cli
@@ -46,7 +56,7 @@ pipelines:
   branches:
     master:
       - step:
-          image: pixboost/lighthouse-ci-cli:1-0.3.7
+          image: pixboost/lighthouse-ci-cli:1.0.0-0.3.7
           name: Lighthouse
           script:
             - echo "Everything is CI"
@@ -62,8 +72,7 @@ pipelines:
             - gsutil cp -a public-read -r ./.lighthouse-$BITBUCKET_BUILD_NUMBER gs://<YOUR_BUCKET_WITH_RESULTS>
 ```
 
-## Advantages
+## Versioning
 
-* Using alpine node image and trying to keep it as small as possible. Currently - 160MB
-* Using tags to pin a specific lhci version
-* Travis CI build with healthcheck
+We are using semver with `lhci` version as a suffix. An example: `1.0.0-0.3.7` where
+`1.0.0` is a version of the image and `0.3.7` is a version of `lhci`.  
