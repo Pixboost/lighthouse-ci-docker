@@ -14,7 +14,32 @@ We are using this image in our Bitbucket Pipeline as a step to run LH tests and 
 docker pull pixboost/lighthouse-ci-cli
 ```
 
-Example of using in Bitbucket Pipelines and copying results to the a GCS bucket:
+Example configuration of `lighthouserc.yaml`
+
+**NOTE**: We are using `--no-sandbox --headless` flags to launch Chrome. Given
+we are not running Chrome as root user `--no-sandbox` shouldn't be a concern.
+
+```yaml
+ci:
+    collect:
+        staticDistDir: ./
+        additive: false
+        url:
+        - index.html
+        settings:
+            chrome-flags: "--no-sandbox --headless"
+            throttling-method: simulate
+            # https://github.com/GoogleChrome/lighthouse/blob/8f500e00243e07ef0a80b39334bedcc8ddc8d3d0/lighthouse-core/config/constants.js#L19-L26
+            throttling:
+                throughputKbps: 1638
+                uploadThroughputKbps: 675
+                cpuSlowdownMultiplier: 4
+    assert:
+        preset: lighthouse:no-pwa
+
+```
+
+Example of running in Bitbucket Pipelines and copying results to the a GCS bucket:
 
 ```yaml
 pipelines:
@@ -26,6 +51,8 @@ pipelines:
           script:
             - echo "Everything is CI"
             - lhci autorun || true
+          artifacts:
+            - .lighthouseci/**
       - step:
           image: google/cloud-sdk:273.0.0-slim
           script:
