@@ -1,8 +1,8 @@
 # lighthouse-ci-docker
 
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/pixboost/lighthouse-ci-cli?style=for-the-badge)
-![Docker Pulls](https://img.shields.io/docker/pulls/pixboost/lighthouse-ci-cli?style=for-the-badge)
-![Travis (.org)](https://img.shields.io/travis/Pixboost/lighthouse-ci-docker?style=for-the-badge)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/pixboost/lighthouse-ci-cli)
+![Docker Pulls](https://img.shields.io/docker/pulls/pixboost/lighthouse-ci-cli)
+![Travis (.org)](https://img.shields.io/travis/Pixboost/lighthouse-ci-docker)
 
 Docker image for [Lighthouse CI CLI](https://github.com/GoogleChrome/lighthouse-ci)
 
