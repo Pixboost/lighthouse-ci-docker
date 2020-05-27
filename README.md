@@ -17,23 +17,25 @@ Docker image for [Lighthouse CI CLI](https://github.com/GoogleChrome/lighthouse-
 
 ### Locally
 
+You could use [example config file](example/lighthouserc.example.yaml) from this repo to
+run LightHouse on any website. Just replace https://pixboost.com from in the configuration
+and run the command below:
+
 ```
-docker run -it --rm -v $(pwd)/example:/home/lhci/example -v $(pwd)/.lighthouseci:/home/lhci/.lighthouseci  lhci lhci --config ./example/lighthouserc.example.yaml autorun
+docker run -it --rm -v $(pwd)/example:/home/lhci/example \
+-v $(pwd)/.lighthouseci:/home/lhci/.lighthouseci \
+pixboost/lighthouse-ci-cli lhci --config ./example/lighthouserc.example.yaml autorun
 ```
+
+You'll find the results in `.lighthouseci` folder.
 
 ### In CI Pipeline
 We are using this image in our Bitbucket Pipeline as a step to run LH tests and then upload results to 
 Google Cloud Storage.
 
-To pull the image and start playing around:
-
-```shell script
-docker pull pixboost/lighthouse-ci-cli
-```
-
 Example configuration of `lighthouserc.yaml`
 
-**NOTE**: We are using `--no-sandbox --headless` flags to launch Chrome. Given
+**NOTE**: We are using `--no-sandbox --headless` flags to launch Chromium. Given
 we are not running Chrome as root user `--no-sandbox` shouldn't be a concern.
 
 ```yaml
@@ -56,7 +58,7 @@ ci:
 
 ```
 
-Example of running in Bitbucket Pipelines and copying results to the a GCS bucket:
+Example of running in Bitbucket Pipelines and copying results to a GCS bucket:
 
 ```yaml
 pipelines:
