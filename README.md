@@ -15,6 +15,13 @@ Docker image for [Lighthouse CI CLI](https://github.com/GoogleChrome/lighthouse-
 
 ## Usage
 
+### Locally
+
+```
+docker run -it --rm -v $(pwd)/example:/home/lhci/example -v $(pwd)/.lighthouseci:/home/lhci/.lighthouseci  lhci lhci --config ./example/lighthouserc.example.yaml autorun
+```
+
+### In CI Pipeline
 We are using this image in our Bitbucket Pipeline as a step to run LH tests and then upload results to 
 Google Cloud Storage.
 

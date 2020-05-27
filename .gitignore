@@ -1,2 +1,4 @@
 .idea
 *.iml
+.lighthouseci/*.json
+.lighthouseci/*.html
