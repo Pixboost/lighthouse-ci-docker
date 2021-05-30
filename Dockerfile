@@ -15,4 +15,4 @@ USER lhci
 WORKDIR /home/lhci
 
 RUN mkdir .lighthouseci
-VOLUME .lighthouseci
+VOLUME ["/home/lhci/.lighthouseci"]
