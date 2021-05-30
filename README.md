@@ -23,6 +23,7 @@ and run the command below:
 
 ```
 docker run -it --rm -v $(pwd)/example:/home/lhci/example \
+--user=$(id -u):$(id -g) \
 -v $(pwd)/.lighthouseci:/home/lhci/.lighthouseci \
 pixboost/lighthouse-ci-cli lhci --config ./example/lighthouserc.example.yaml autorun
 ```
