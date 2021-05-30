@@ -2,7 +2,7 @@
 
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/pixboost/lighthouse-ci-cli)](https://hub.docker.com/r/pixboost/lighthouse-ci-cli/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/pixboost/lighthouse-ci-cli)](https://hub.docker.com/r/pixboost/lighthouse-ci-cli/)
-[![Travis (.org)](https://img.shields.io/travis/Pixboost/lighthouse-ci-docker)](https://travis-ci.org/Pixboost/lighthouse-ci-docker)
+[![Build](https://github.com/Pixboost/lighthouse-ci-docker/actions/workflows/build.yml/badge.svg)](https://github.com/Pixboost/lighthouse-ci-docker/actions/workflows/build.yml)
 
 Docker image for [Lighthouse CI CLI](https://github.com/GoogleChrome/lighthouse-ci)
 
@@ -10,8 +10,8 @@ Docker image for [Lighthouse CI CLI](https://github.com/GoogleChrome/lighthouse-
 
 * Using alpine node image as a base and trying to keep it as small as possible. Currently - 160MB
 * Using tags to pin a specific lhci version
-* Travis CI build with healthcheck
-* Not using `root` user
+* GitHub Actions build with healthcheck
+* Not using `root` user in a container
 
 ## Usage
 
