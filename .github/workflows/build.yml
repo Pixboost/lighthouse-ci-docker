@@ -2,6 +2,13 @@ name: Build
 
 on:
   push:
+    branches:
+      - '**'
+    tags:
+      - '!1**'
+  release:
+    types:
+      - published
 
 jobs:
   test:
@@ -11,7 +18,44 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Build
-        run: docker build -t lhci .
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          load: true
+          tags: lhci
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
       - name: Test
         run: docker run --rm lhci lhci healthcheck --fatal
+
+      - name: Publish image
+        if: ${{ github.event_name == 'release' }}
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          load: false
+          tags: pixboost/lighthouse-ci-cli:${{ github.event.release.tag_name }},pixboost/lighthouse-ci-cli:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
