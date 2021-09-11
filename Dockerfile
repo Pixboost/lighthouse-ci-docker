@@ -1,7 +1,7 @@
-FROM node:14.17-alpine3.11
+FROM node:14.17-alpine3.14
 
 RUN apk add --no-cache chromium
-RUN npm install -g @lhci/cli@0.7.2
+RUN npm install -g @lhci/cli@0.8.1
 
 RUN addgroup lhci \
     && adduser \
